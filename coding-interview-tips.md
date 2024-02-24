@@ -17,6 +17,11 @@
   * Do not add too many comments. wastes your time. one liners are fine
   * import java.util.* instead of multiple import
   * Have it working before you optimize (Better done than perfect)
+  * Cleanup the code at the end : Remove unnecessary comments, imports, blanklines etc.
+
+**Logging**
+  * Be smart about where to log. Critical places only. too much is bad. Keep it short but print as much state as possible
+  * 
    
 **Solve unknown problems**
   * SOLVE manually and see how you are solving. see if there is a possiblity of optimization
