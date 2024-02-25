@@ -8,20 +8,24 @@
 
 
   **Coding**
-  * Keep simple names. (length, input, start, end, max, etc)
-  * Break into small functions and test each one before writing the whole program.
-  * Dont wait till the end to test. Test/Validate your thinking often with logging.
-  * Log important flow conditions with var values. Use String.format() for ease.
-  * start with simple case and make it work. iterate for complexity
+  * Naming
+    * Keep short names : s (for string), max, len, l, r (left and right) etc. 
+  * Making it work
+    * Start with simple examples. Don't input large testcase. the output will overwhelm you.
+    * Add more cases incrementally
+    * Break into small functions and test each one before writing the whole program.
+    * Dont wait till the end to test. Test/Validate your thinking often with logging.
+  * Logging
+    * Dont overlog but log at strategic places to start with.
+    * if you are stuck, simplify the input and add more logs. remove them once the issue is fixed 
+  * Comments
+    * One liners that are brief and at right places 
   * Manually verify the logic to make sure there are no bugs
-  * Do not add too many comments. wastes your time. one liners are fine
-  * import java.util.* instead of multiple import
   * Have it working before you optimize (Better done than perfect)
-  * Cleanup the code at the end : Remove unnecessary comments, imports, blanklines etc.
-
-**Logging**
-  * Be smart about where to log. Critical places only. too much is bad. Keep it short but print as much state as possible
-  * 
+  * Cleanup
+     * Cleanup the code at the end : Remove unnecessary comments, imports, blanklines etc.
+     * Keep the least minimum code that works clearly. Its ok to be messsy during troubleshooting
+     * If you have time, make it beautiful.
    
 **Solve unknown problems**
   * SOLVE manually and see how you are solving. see if there is a possiblity of optimization
@@ -29,3 +33,4 @@
 
 **Communication**
   * Share what you are thinking while coding
+  * If you are badly stuck and running out of time, ok to ask for few hints.
