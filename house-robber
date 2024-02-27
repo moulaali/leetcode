@@ -1,0 +1,81 @@
+import java.io.*;
+import java.util.*;
+
+/*
+* https://leetcode.com/problems/house-robber/description/
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+Total amount you can rob = 1 + 3 = 4.
+Example 2:
+
+Input: nums = [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+Total amount you can rob = 2 + 9 + 1 = 12.
+
+
+Approach: 
+Knapsack style DP
+
+Base case : 
+  n=1 (pick the only house)
+  n=2 (pick the max of two houses)
+i=n case
+  value(i) + max(i-2): include ith home and add the max of left skip neighbor
+  max(i-1) : skip ith home and be happy with max(i-1) home
+  max(i) : is max of the above 2.
+*/
+
+class Solution {
+  public static void main(String[] args) {
+    getMax(new int[] {5, 3, 4, 11, 2});
+  }
+
+  static int getMax(int[] h) {
+      int[] max = new int[h.length];
+
+      // Base cases
+      if (h.length == 1) {
+       return h[0];
+      } else if (h.length == 2) {
+        return Math.max(h[0], h[1]);
+      }
+
+      // more than 2 homes. Initialize n=0 and n=1 cases
+      max[0] = h[0];
+      if (h[0] > h[1]) {
+        max[1] = h[0];
+      } else {
+        max[1] = h[1];
+      }
+
+      // Solve for n
+      for (int i = 2; i < h.length; i++) {
+        // include h[i] and h[i-2]
+        int include = h[i] + max[i - 2];
+        int exclude = max[i-1];
+
+        if (include > exclude) {
+          System.out.println("i=" + i + ", h[i]=" + h[i] + " inclusion is better. include value: " + include 
+              + " exclude value : " + exclude);
+          max[i] = include;
+        } else {
+          System.out.println("i=" + i + ", h[i]=" + h[i] + " exclusion is better. include value: " + include 
+              + " exclude value : " + exclude);
+          max[i] = exclude;
+        }
+      }
+
+      return max[h.length - 1];
+  }
+}
