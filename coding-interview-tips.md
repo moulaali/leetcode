@@ -28,6 +28,9 @@
      * If you have time, make it beautiful.
    
 **Solve unknown problems**
+  * Start with what you know, its fine to optimize the edge cases as we try out tests.
+  * Write helper methods to print and do useful things.
+  * HARD PROBLEMS can still be solved. YES, YOU CAN TRY !
   * SOLVE manually and see how you are solving. see if there is a possiblity of optimization
   * Try to relate with other standard patterns: Graph search, tree, stack etc
 
