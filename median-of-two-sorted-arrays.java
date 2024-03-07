@@ -14,6 +14,8 @@
  * The good parition will have
  *
  *  A[a_partition_index] < B[b_partition_index + 1] and B[b_partition_index] < A[a_partition_index + 1]
+ * 
+ * https://www.youtube.com/watch?v=LPFhl65R7ww
  */
 
 class Solution {
