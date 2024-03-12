@@ -1,0 +1,60 @@
+import java.util.*;
+import java.time.*;
+import java.time.format.*;
+
+import com.google.common.util.concurrent.RateLimiter;
+
+/*
+ * Multithreaded ratelimiting using guava rate limiter object
+ */
+
+class Solution {
+  public static void main(String[] args) throws InterruptedException {
+    Thread t[] = new Thread[10];
+    RateLimiter rl = RateLimiter.create(0.25); // 1 per 4 secs
+
+    for (int i = 0; i < t.length; i++) {
+      t[i] = new Thread(new Worker(rl));
+      t[i].start();
+    }
+  }
+}
+
+class Worker implements Runnable {
+
+  private RateLimiter rl;
+  private long tId;
+
+  Worker(RateLimiter rl) {
+    this.rl = rl;
+  }
+
+
+  @Override
+  public void run() {
+    Random random = new Random();
+    tId = Thread.currentThread().threadId();
+        
+    try {
+      while(true) {
+        Thread.sleep(random.nextInt(701) + 300);
+        // System.out.println(getTimeStr() + " (thread_id=" + tId + ". trying to acquire...");
+        rl.acquire();
+        System.out.println(getTimeStr() + "(thread_id=" + tId + ") : acquired");
+      }
+    } catch (InterruptedException ie) {
+      ie.printStackTrace();
+    }
+  }
+
+  private static String getTimeStr() {
+    // Get the current date and time
+    LocalDateTime currentTime = LocalDateTime.now();
+      
+    // Define a formatter to format the date and time
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+      
+    // Format the current time using the formatter
+    return currentTime.format(formatter);
+  }
+}
