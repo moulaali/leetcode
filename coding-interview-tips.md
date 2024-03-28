@@ -1,7 +1,4 @@
-
-
-
-  **Before you start**
+ **Before you start**
   
   * Move fast. Do not spend too much time for previous projects and experience.
   * Ask clarifying questions before jumping to answer
@@ -41,3 +38,4 @@
 **Debugging/Troubleshooting**
   * Take simpler test case : smaller array with 3-4 elements, happy case, simple tree with few nodes
   * Infinite loops in functions: have a static function counter that is incremented after every call. exit after count == 10
+  * Manually go over the logic to see silly mistakes 
