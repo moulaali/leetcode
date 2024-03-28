@@ -40,5 +40,4 @@
 
 **Debugging/Troubleshooting**
   * Take simpler test case : smaller array with 3-4 elements, happy case, simple tree with few nodes
-  * Infinite loops in function loops: have a static function counter that is incremented after every call. exit after count == 10
-  * 
+  * Infinite loops in functions: have a static function counter that is incremented after every call. exit after count == 10
