@@ -21,6 +21,15 @@ Output: 3
 Explanation: The answer is "wke", with the length of 3.
 Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
+
+Approach:
+Sliding window: 
+  - keep two pointers start and end.
+  - keep moving the end as long as the new char is not seen. (manage the seen in small hashset)
+     - if seen, slide the start pointer just beyond the char that is duplicate.
+     - While we slide the start, remove the characters from seen
+  - Keep updating the max length based on (end - start) pointers.
+
  */
 
 public class Solution {
