@@ -1,0 +1,81 @@
+
+
+public class MultithreadedWebCrawler {
+    public static void main(String[] args) throws Exception {
+        // Executors
+        this.downloadTasksEs = Executors.newFixedThreadPool(threadPoolSize);
+        this.parseTasksEs = Executors.newFixedThreadPool(threadPoolSize);
+        
+        // url frontier
+        this.urlFrontier = new LinkedBlockingQueue<>();
+        
+        // seed urls
+        this.seedUrls = seedUrls;
+        
+        // visited/seen ?
+        this.seen = new HashSet<>();
+        
+        // collect futures
+        this.futures = new LinkedList<>();       
+        
+        for (String seed : seedUrls) {
+            urlFrontier.add(seed);
+        }
+
+        crawl();
+    }
+
+
+    void crawl() throws InterruptedException, ExecutionException {
+        // Keep taking from queue and submit to executors 
+        while (saveCount < MAX_URLS) {
+
+            String url = urlFrontier.poll(20, TimeUnit.SECONDS);
+            if (url == null) {
+                System.out.println("No elements in url fronier. Waited for 20 secs");
+                break;
+            }
+
+            if (!seen.contains(url)) {
+                seen.contains(url);
+                // Asynchronously download+save and then chain to parse and expand the frontier
+                Future<String> processFuture = CompletableFuture.supplyAsync(() -> download(url), downloadTasksEs)
+                        .thenApplyAsync(downloadedUrl -> parseHtml(downloadedUrl), parseTasksEs)
+                        .thenApplyAsync(urls -> {
+                            for (String u : urls) {
+                                urlFrontier.offer(u);
+                            }
+                            return "";
+                        });
+                futures.add(processFuture);
+            }
+        }
+
+        
+        for (Future f : futures) {
+            f.get();
+        }
+    }
+
+    public String download(String url) {
+        response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (responseCode == 200) {
+            saveLocally(url, response.body());
+            return url;
+        }
+    }
+    
+
+    // Parse downloaded html file and emits the outgoing urls
+    Set<String> parseHtml(String url) {
+        String fileContent = loadFile(url)
+        Document doc = Jsoup.parse(content);
+        Elements links = doc.select("a[href]");
+        
+        for (Element link : links) {
+            urls.add(linkUrl);
+        }
+
+        return urls;
+    }
+}
