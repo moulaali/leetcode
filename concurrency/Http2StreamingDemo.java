@@ -9,6 +9,9 @@ import java.net.http.HttpClient;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Demo http2 request/response multiplexing with streams
+ */
 public class Http2StreamingDemo {
 
     public static void main(String[] args) throws InterruptedException {
