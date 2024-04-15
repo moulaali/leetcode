@@ -1,4 +1,12 @@
-
+/**
+ * Topic
+ *   - TP tuning
+ *   - Error handling
+ *   - Connection pool management
+ *   - Rate limiting
+ *   - Parsing with Jsoup
+ *   - Stop conditions
+ */
 
 public class MultithreadedWebCrawler {
     public static void main(String[] args) throws Exception {
