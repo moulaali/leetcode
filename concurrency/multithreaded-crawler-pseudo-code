@@ -6,6 +6,7 @@
  *   - Rate limiting
  *   - Parsing with Jsoup
  *   - Stop conditions
+ *   - Blocking co-efficient 
  */
 
 public class MultithreadedWebCrawler {
