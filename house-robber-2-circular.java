@@ -1,16 +1,3 @@
-/*
- * Click `Run` to execute the snippet below!
- */
-
-
-
-/*
- * To execute Java, please define "static void main" on a class
- * named Solution.
- *
- * If you need more classes, simply define them inline.
- */
-
 class Solution {
   public static void main(String[] args) {
     getMaxCircular(new int[] {5, 3, 4, 11, 2});
