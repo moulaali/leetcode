@@ -1,0 +1,58 @@
+/*
+
+Given a string s, return true if the s can be palindrome after
+deleting at most one character from it.
+
+Example 1:
+
+Input: s = "aba"
+Output: true
+Example 2:
+
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'c'.
+Example 3:
+
+Input: s = "abc"
+Output: false
+
+Approach: two pointers. when mismatch happens, try deleting either chars (i+1, j) or (i, j-1)
+ */
+
+class Solution {
+  public static void main(String[] args) {
+    System.out.println(isPalAfterCharDel("abccba"));
+  }
+
+  static boolean isPalAfterCharDel(String s) {
+    return isPal(s, 0, s.length() - 1, true);
+  }
+
+  static boolean isPal(String str, int s, int e, boolean allowDel) {
+    System.out.println("isPal called with " + str + " s: " + s + " e: " + e + " substr: " + str.substring(s, e + 1));
+    int i = s;
+    int j = e;
+
+    while (i < j) {
+      
+      if (str.charAt(i) != str.charAt(j)) {
+        if (!allowDel) {
+          return false;
+        }
+
+        // try deleting ith char
+        boolean iDel = isPal(str, i + 1, j, false);
+        if (!iDel) {
+          // try deleting j char
+          return isPal(str, i, j - 1, false);
+        }
+      }
+
+      i++;
+      j--;
+    }
+
+    return true;
+  }
+}
