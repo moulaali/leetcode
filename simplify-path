@@ -1,0 +1,60 @@
+import java.util.Stack;
+
+import com.google.common.base.Strings;
+
+/**
+https://leetcode.com/problems/simplify-path/description/
+*/
+
+class Solution {
+
+ public static void main(String[] args) {
+    simplifyPath("/a/b/c/../.././d"); // test .. and .
+    simplifyPath("/");  // test simple root
+    simplifyPath("/a//b");  // test 2 slashes
+    simplifyPath("/../");
+  }
+
+  static void simplifyPath(String input) {
+    Stack<String> s = new Stack<>();
+
+    String[] parts = input.split("/");
+
+    StringBuilder sb = new StringBuilder();
+    for (String p : parts){
+
+      // multiple empty slash
+      if (Strings.isNullOrEmpty(p)) {
+        continue;
+      }
+
+      // Ignore current dir
+      if (p.equals(".")) {
+        continue;
+      }
+
+      // handle parent dir
+      if (p.equals("..")) {
+        
+        if (s.isEmpty()) {
+          continue;
+        }
+
+        s.pop();
+        continue;
+      }
+
+      // everything else is dir
+      s.push(p);
+    }
+    
+
+    sb.append("/");
+    for (String part : s) {
+      sb.append(part);
+      sb.append("/");
+    }
+
+    System.out.println(sb.toString());
+  }
+}
