@@ -1,6 +1,10 @@
 import java.util.Map.Entry;
-import java.util.Map;
 import java.util.*;
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
 
 /* 
 
@@ -10,10 +14,14 @@ https://leetcode.com/problems/binary-tree-vertical-order-traversal/description/
 
 Approach :
 
-Assign the relative position of each node to root (which has 0th position).
-The node to its left is parents_position - 1 and to right parents_position + 1;
-Keep a map of postion to all nodes. Use a treemap to keep the map sorted by lowest postion.
-All the values in the map are vertically ordered :)
+Additional constraints
+1/ The values in same col should be level ordered
+2/ The values from same level and col should be sorted
+
+Do a bfs with a standard queue Approach
+Use the trick of using queue length in an inside loop to identify the level and process ALL nodes in a level
+Maintain a map of col->list_of_node_values to manage the vertical order
+Queue should hold a pair of (Node, col) to know the column and use it to set the left child and right child
 
 */
 class Solution {
@@ -23,37 +31,68 @@ class Solution {
       Node n_13 = new Node(13);
       Node n_23 = new Node(23);
       Node n_6 = new Node(6);
-      Node n_17 = new Node(17);
+      Node n_21 = new Node(21);
       Node n_20 = new Node(20);
       Node n_29 = new Node(29);
+      Node n_9 = new Node(9);
+      Node n_11 = new Node(11);
+
+
 
       n_18.left = n_13;
       n_18.right = n_23;
 
       n_13.left = n_6;
-      n_13.right = n_17;
+      n_13.right = n_21;
 
       n_23.left = n_20;
       n_23.right = n_29;
 
-      Map<Integer, List<Integer>> m = new TreeMap<Integer, List<Integer>>();
-      createVerticalMap(n_18, 0, m);
+      n_6.right = n_9;
+      n_9.right = n_11;
+
       
-      for (Entry<Integer, List<Integer>> e : m.entrySet()) {
-        System.out.println(e.getValue());
-      }
+      printVertical(n_18);
     }
 
-    static void createVerticalMap(Node n, int pos, Map<Integer, List<Integer>> map) {
-      map.putIfAbsent(pos, new ArrayList<>());
-      map.get(pos).add(n.data);
+    static void printVertical(Node n) {
+      Map<Integer, List<Integer>> m = new TreeMap<Integer, List<Integer>>();
+      Queue<Pair<Node, Integer>> q = new LinkedList<>();
+      
+      q.add(Pair.of(n, 0));
+      while (!q.isEmpty()) {
+        
+        int len = q.size();
+        // Mini multimap to collect all values in same col to sort
+        Multimap<Integer, Integer> mm = ArrayListMultimap.create();
 
-      if (n.left != null) {
-        createVerticalMap(n.left, pos - 1, map);
+        for (int i = 0; i < len; i++) {
+          Pair<Node, Integer> hPair = q.poll();
+          Node head = hPair.getKey();
+          Integer col = hPair.getValue();
+          
+          mm.put(col, head.data);
+
+          if (head.left != null) {
+            q.add(Pair.of(head.left, col - 1));
+          }
+          if (head.right != null) {
+            q.add(Pair.of(head.right, col + 1));
+          }
+        }
+
+        for (Integer col : mm.keySet()) {
+            List<Integer> l = new ArrayList<>(mm.get(col));
+            Collections.sort(l);
+            m.putIfAbsent(col, new ArrayList<>());
+            m.get(col).addAll(l);
+        }
+
       }
 
-      if (n.right != null) {
-        createVerticalMap(n.right, pos + 1, map);
+
+      for (Entry<Integer, List<Integer>> e : m.entrySet()) {
+        System.out.println(e.getValue());
       }
     }
 }
