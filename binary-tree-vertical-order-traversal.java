@@ -37,8 +37,6 @@ class Solution {
       Node n_9 = new Node(9);
       Node n_11 = new Node(11);
 
-
-
       n_18.left = n_13;
       n_18.right = n_23;
 
@@ -50,13 +48,14 @@ class Solution {
 
       n_6.right = n_9;
       n_9.right = n_11;
-
-      
+        
       printVertical(n_18);
     }
 
     static void printVertical(Node n) {
+      // col -> list of values tree map. tree map allows going by left most to right most cols
       Map<Integer, List<Integer>> m = new TreeMap<Integer, List<Integer>>();
+      // Pair allows tracking the col value in a queue
       Queue<Pair<Node, Integer>> q = new LinkedList<>();
       
       q.add(Pair.of(n, 0));
@@ -64,13 +63,15 @@ class Solution {
         
         int len = q.size();
         // Mini multimap to collect all values in same col to sort
+        // This is to satisfy #2 constraint above.
         Multimap<Integer, Integer> mm = ArrayListMultimap.create();
 
         for (int i = 0; i < len; i++) {
           Pair<Node, Integer> hPair = q.poll();
           Node head = hPair.getKey();
           Integer col = hPair.getValue();
-          
+
+          // for now store the col->data. we will sort and add later
           mm.put(col, head.data);
 
           if (head.left != null) {
@@ -81,16 +82,16 @@ class Solution {
           }
         }
 
+        // level done. add all the values in a sorted fashion for a given col
         for (Integer col : mm.keySet()) {
             List<Integer> l = new ArrayList<>(mm.get(col));
             Collections.sort(l);
             m.putIfAbsent(col, new ArrayList<>());
             m.get(col).addAll(l);
         }
-
       }
 
-
+      // print the tree map holding the cols and values
       for (Entry<Integer, List<Integer>> e : m.entrySet()) {
         System.out.println(e.getValue());
       }
