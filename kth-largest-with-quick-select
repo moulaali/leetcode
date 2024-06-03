@@ -1,0 +1,66 @@
+import java.util.Arrays;
+
+/**
+ * Kth largest element using QuickSelect algorithm
+ *
+ * https://pasteboard.co/Gh5m0lawjRmD.png
+ *
+ * Basic idea :
+ *  Understand the partition approach :
+ *
+ *  1/ There are three core pointers : pivot (typically the right most), p (partition fence), i (current element)
+ *  2/ The idea is to keep elements more than pivot to the left side of partition, and less to the other side of p
+ *  3/ iterate over all elements, if element is big, keep moving, if it is less, swap the element with a[p] and move p
+ *
+ *  if pivot index is k-1, we found else look in left or right partion.
+ *
+ *  see above picture
+ *
+ */
+public class KthLargestNumber {
+
+    public static void main(String[] args) {
+        int[] a = new int[]{7, 1, 8, 11, 0, 13, 15, 2};
+        int kth = findKthLargest(a, 2, 0, a.length - 1);
+
+        Arrays.sort(a);
+        System.out.println("Sorted array : " + Arrays.toString(a));
+        System.out.println("kth : " + kth);
+    }
+
+    static int findKthLargest(int[] a, int k, int l, int r) {
+
+        int partitionIndex = partition(a, l, r);
+        if (partitionIndex == k - 1) {
+            return a[partitionIndex];
+        } else if (partitionIndex >= k) {
+            return findKthLargest(a, k, l, partitionIndex - 1);
+        } else {
+            return findKthLargest(a, k, partitionIndex + 1, r);
+        }
+    }
+
+    static int partition(int a[], int l, int r) {
+        int p = l;
+        int pivot = r;
+
+        for (int i = l; i < r; i++) {
+            if (a[i] > a[pivot]) {
+                swap(a, i, p);
+                p++;
+            }
+            // System.out.println("New array : " + Arrays.toString(a) + " p : " + p + "a[p] = " + a[p]);
+        }
+
+        swap(a, p, r);
+        System.out.println("Returning split pointer : " + p + " a[p] " + a[p]);
+
+        return p;
+    }
+
+    static void swap(int a[], int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
