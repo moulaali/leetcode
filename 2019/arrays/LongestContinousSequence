@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+
+/**
+ * Find the longest continous sequence of numbers
+ * 
+ * <P>Approach involves creating a copy of elements in hashset. Then
+ * going over each element and removing all the immediately previous numbers
+ * and immediate next numbers. Keep a count of removals and compare with max.
+ */
+public class LongestContinousSequence {
+
+    public static void main(String[] args) {
+        int[] input = {100, 3, 101, 4, 2, 1, 102, 200, 103, 201, 104, 7, 105 };
+        System.out.println(getLongestSequenceCount(input));  // 6: 100, 101, 102, 103, 104, 105
+    }
+    
+    static int getLongestSequenceCount(int[] input) {
+        Set<Integer> set = new HashSet<>();
+        int maxCount = 0;
+        int maxStartNumber = -1;
+        
+        for (int i : input) {
+            set.add(i);
+        }
+        
+        for (int i : input) {
+            int leftNeighbor = i - 1;
+            int rightNeighbor = i + 1;
+            int count = 1;
+            int startNumber = i;
+            
+            while(set.contains(leftNeighbor)) {
+                set.remove(leftNeighbor);
+                leftNeighbor--;
+                count++;
+            }
+            
+            while (set.contains(rightNeighbor)) {
+                set.remove(rightNeighbor);
+                rightNeighbor++;
+                count++;
+            }
+            
+            if (count > maxCount) {
+                maxCount = count;  
+                maxStartNumber = startNumber;
+            }
+        }
+        
+        System.out.println("Max Start number: " + maxStartNumber);
+        return maxCount;
+    }
+}

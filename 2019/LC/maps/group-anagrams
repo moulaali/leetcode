@@ -1,0 +1,55 @@
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
+import java.util.*;
+
+/**
+ *
+ * https://leetcode.com/problems/group-anagrams/
+ *
+    Given an array of strings, group anagrams together.
+
+    Example:
+
+    Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+    Output:
+    [
+    ["ate","eat","tea"],
+    ["nat","tan"],
+    ["bat"]
+    ]
+    Note:
+
+    All inputs will be in lowercase.
+    The order of your output does not matter.
+ */
+public class AnagramGroups {
+
+  public static void main(String[] args) {
+    List<String> inputStrings = new ArrayList<>();
+
+    inputStrings.add("foo");
+    inputStrings.add("bar");
+    inputStrings.add("blah");
+    inputStrings.add("oof");
+    inputStrings.add("halb");
+    inputStrings.add("rab");
+
+    System.out.println(getAnagramGroups(inputStrings));  // [[bar, rab], [foo, oof], [blah, halb]]
+  }
+
+  private static List<List<String>> getAnagramGroups(List<String> inputStrings) {
+    Multimap<String, String> anagramGroupsMap = ArrayListMultimap.create();
+    List<List<String>> groups = new ArrayList<>();
+
+    for (String input : inputStrings) {
+      char[] chars = input.toCharArray();
+      Arrays.sort(chars);
+      anagramGroupsMap.put(new String(chars), input);
+    }
+    for (Entry<String, Collection<String>> entry : anagramGroupsMap.asMap().entrySet()) {
+      groups.add((List<String>) entry.getValue());
+    }
+    return groups;
+  }
+}
