@@ -13,7 +13,7 @@ Use recursion to go into inner layers. A inner matric can be uniquely defined by
 top right corner element indices and number of rows and cols.
 
  */
-class Solution {
+class SpiralMatrix {
   public static void main(String[] args) {
     int[][] a = {
       {1,2,3},

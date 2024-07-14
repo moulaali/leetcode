@@ -12,6 +12,8 @@
     * Add more cases incrementally
     * Break into small functions and test each one before writing the whole program.
     * Dont wait till the end to test. Test/Validate your thinking often with logging.
+  * Verification
+    * Important to run few test cases and edge cases at the end.
   * Logging
     * Dont overlog but log at strategic places to start with.
     * if you are stuck, simplify the input and add more logs. remove them once the issue is fixed 
