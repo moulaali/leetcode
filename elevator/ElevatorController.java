@@ -44,7 +44,7 @@ class ElevatorController {
         if (isOnTheWay) {
             return Math.abs(currentFloor - request.getFloor()) - 1; // Prioritize on the way
         } else {
-            return Math.abs(currentFloor - request.getFloor()) + 1; // Penalize not on the way
+            return Math.abs(currentFloor - request.getFloor()) + 100; // Penalize heavitily not on the way
         }
     }
 }
