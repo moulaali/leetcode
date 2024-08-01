@@ -20,8 +20,8 @@ public class Demo {
 
         ElevatorController controller = new ElevatorController(elevators);
 
-        // Test case 3 : in motion. prefer the closer one on way even if the delta/cost is same
-        controller.handleRequest(new Request(7, Direction.UP));  // picks 2 even though it 3 floors farther and 1 is only 1 floor closer
+        // picks 2 even though it 3 floors farther and 1 is only 1 floor closer
+        controller.handleRequest(new Request(7, Direction.UP));
     }
 
     static void testInMotionSameCost() {
