@@ -10,17 +10,17 @@ class ElevatorController {
     }
 
     public void handleRequest(Request request) {
-        Elevator chosenElevator = findBestElevator(request);
+        Elevator chosenElevator = pickBestElevator(request);
         chosenElevator.acceptRequest(request);
         System.out.println("New state of elevator " + chosenElevator);
     }
 
-    private Elevator findBestElevator(Request request) {
+    private Elevator pickBestElevator(Request request) {
         Elevator picked = elevators.stream()
                 .min((e1, e2) -> {
-                    int distance1 = getCost(e1, request);
-                    int distance2 = getCost(e2, request);
-                    return Integer.compare(distance1, distance2);
+                    int cost1 = getCost(e1, request);
+                    int cost2 = getCost(e2, request);
+                    return Integer.compare(cost1, cost2);
                 })
                 .get();
         System.out.println("picked elevator : \n " + picked + " for request " + request);
