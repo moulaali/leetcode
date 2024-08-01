@@ -16,6 +16,9 @@ Input: strs = ["dog","racecar","car"]
 Output: ""
 Explanation: There is no common prefix among the input strings.
 
+Approach : Straightforward, loop over every ith char of first string, check ith char of 1..n strings.
+if you see a shorter string or different char, break.
+
  */
 
 class Solution {
